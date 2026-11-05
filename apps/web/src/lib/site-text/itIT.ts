@@ -128,7 +128,7 @@ const it: Dictionary = {
     title: "Spoken Manager",
     lead: "Un'app desktop per Windows, macOS e Linux. Installa e aggiorna Spoken e i suoi pacchetti voce per ogni installazione di WoW sul tuo computer. Un aggiornamento scarica solo i file cambiati, non di nuovo l'intero pacchetto.",
     download: "Scarica il Manager",
-    files: "Windows .exe, macOS .dmg o Linux .AppImage, dalla pagina delle release su GitHub.",
+    files: "Windows .exe, macOS .dmg o Linux .AppImage, .deb o .rpm, dalla pagina delle release su GitHub.",
     step1: "Trova i tuoi giochi",
     step1Text: "Forever e Classic Era hanno ciascuno una scheda.",
     step2: "Scegli le lingue",
@@ -158,6 +158,8 @@ const it: Dictionary = {
     macArm: "macOS, Apple silicon (.dmg)",
     macIntel: "macOS, Intel (.dmg)",
     linux: "Linux (.AppImage)",
+    linuxDeb: "Linux (.deb)",
+    linuxRpm: "Linux (.rpm)",
     otherFiles:
       "Gli altri file sono nella {link}. Se Windows SmartScreen blocca il programma di installazione, scegli «Ulteriori informazioni» e poi «Esegui comunque».",
     releasePage: "pagina delle release",

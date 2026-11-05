@@ -132,7 +132,7 @@ const ru: Dictionary = {
     title: "Spoken Manager",
     lead: "Приложение для Windows, macOS и Linux. Оно устанавливает и обновляет Spoken и его пакеты озвучки для каждой копии WoW на вашем компьютере. При обновлении скачиваются только изменённые файлы, а не весь пакет заново.",
     download: "Скачать Manager",
-    files: "Windows .exe, macOS .dmg или Linux .AppImage, со страницы релизов на GitHub.",
+    files: "Windows .exe, macOS .dmg или Linux .AppImage, .deb или .rpm, со страницы релизов на GitHub.",
     step1: "Он находит ваши игры",
     step1Text: "Forever и Classic Era получают по карточке.",
     step2: "Вы выбираете языки",
@@ -162,6 +162,8 @@ const ru: Dictionary = {
     macArm: "macOS, Apple silicon (.dmg)",
     macIntel: "macOS, Intel (.dmg)",
     linux: "Linux (.AppImage)",
+    linuxDeb: "Linux (.deb)",
+    linuxRpm: "Linux (.rpm)",
     otherFiles:
       "Остальные файлы лежат на {link}. Если Windows SmartScreen остановил установщик, нажмите «Подробнее», затем «Выполнить в любом случае».",
     releasePage: "странице релизов",

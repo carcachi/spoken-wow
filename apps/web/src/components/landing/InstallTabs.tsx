@@ -42,7 +42,7 @@ export default function InstallTabs({
   languages: InstallLanguage[];
   initial: Lang;
   managerUrl: string;
-  downloads: { windows: string; mac: string; macIntel: string; linux: string };
+  downloads: { windows: string; mac: string; macIntel: string; linux: string; deb: string; rpm: string };
 }) {
   const text = useSiteText();
   const t = text.install;
@@ -116,6 +116,14 @@ export default function InstallTabs({
               <a className="bn-btn" href={downloads.linux}>
                 <BrandIcon name="linux" />
                 {t.linux}
+              </a>
+              <a className="bn-btn" href={downloads.deb}>
+                <BrandIcon name="linux" />
+                {t.linuxDeb}
+              </a>
+              <a className="bn-btn" href={downloads.rpm}>
+                <BrandIcon name="linux" />
+                {t.linuxRpm}
               </a>
             </div>
             <p className="bn-note">
