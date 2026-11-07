@@ -555,9 +555,8 @@ local function Refresh(mapID)
 		audio = { foundOn, nil }, report = { foundOn, nil }, lore = { foundOn, nil } })
 end
 
---- Whether the panel is on screen beside the map. The highlight and the click only offer what it
---- would tell: with it folded away, turned off or hidden by the maximized map, the map is left to
---- its own clicks, OpenMap's zoom among them, rather than one reopening the panel.
+--- Whether the panel is on screen beside the map: not folded away, turned off, or hidden by the
+--- maximized map.
 function SpokenPlaces:IsMapPanelOpen()
 	return panel ~= nil and panel:IsShown()
 end
