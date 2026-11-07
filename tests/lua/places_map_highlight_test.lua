@@ -37,6 +37,8 @@ local Z = {}
 local settings = { highlightOpacity = 0.35 }
 function Z:Get(key) return settings[key] end
 function Z:IsPartOn() return true end
+local panelOpen = true
+function Z:IsMapPanelOpen() return panelOpen end
 function Z:IsZoneMap(mapID) return mapID == 1411 end
 local asked = 0
 function Z:AreaAt(_, x, y)
@@ -107,6 +109,16 @@ Expect("not on a continent map, which has Blizzard's own", state.frame:IsShown()
 WorldMapFrame.mapID = 1411
 Run()
 Expect("back on the zone map it lights again", state.frame:IsShown(), true)
+
+-- With the panel not beside the map, a lit area would offer a story nothing is there to tell.
+panelOpen = false
+Point(250, 141)
+Run()
+Expect("with the panel folded away, nothing lights", state.frame:IsShown(), false)
+panelOpen = true
+Point(250, 140)
+Run()
+Expect("...and it lights again once the panel is back", state.frame:IsShown(), true)
 
 -- Area Highlight, on the Places page: how bright, and nothing at all at 0.
 settings.highlightOpacity = 0.6

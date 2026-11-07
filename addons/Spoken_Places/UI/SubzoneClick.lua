@@ -42,9 +42,6 @@ local function HandleClick()
 	if zoneOnly then
 		SpokenPlaces:SelectMap(mapID)
 		SpokenPlaces:FitZone(mapID)
-		if SpokenPlaces:Get("showMapPanel") and SpokenPlaces:Get("mapPanelCollapsed") then
-			SpokenPlaces:SetMapPanelCollapsed(false)
-		end
 		return
 	end
 
@@ -79,11 +76,6 @@ local function HandleClick()
 		SpokenPlaces:SelectSubzone(mapID, areaName, entry)
 	end
 	SpokenPlaces:FitZone(mapID)
-	-- Closed beside the map, the panel opens on what was clicked: the click asked for its story.
-	-- Not where the player turned the panel off in the settings.
-	if SpokenPlaces:Get("showMapPanel") and SpokenPlaces:Get("mapPanelCollapsed") then
-		SpokenPlaces:SetMapPanelCollapsed(false)
-	end
 end
 
 function SpokenPlaces:SetupSubzoneClicks()
@@ -110,7 +102,7 @@ function SpokenPlaces:SetupSubzoneClicks()
 		if button ~= "LeftButton" then
 			return
 		end
-		if not SpokenPlaces:IsPartOn() then
+		if not SpokenPlaces:IsPartOn() or not SpokenPlaces:IsMapPanelOpen() then
 			downX, downY, downMap = nil, nil, nil
 			return
 		end

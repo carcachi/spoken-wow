@@ -25,6 +25,7 @@ local Z = {
     IsPartOn = function() return true end,
     Get = function(_, key) return settings[key] end,
     SetMapPanelCollapsed = function(_, collapsed) settings.mapPanelCollapsed = collapsed end,
+    IsMapPanelOpen = function() return settings.showMapPanel and not settings.mapPanelCollapsed end,
     Print = function() end,
     IsZoneMap = function(_, mapID) return mapID ~= KALIMDOR end,
     AreaAt = function(_, mapID)
@@ -58,21 +59,16 @@ Expect("a click on Mulgore's map opens the area under the cursor", Click(), MULG
 -- missed of its shape (Discovery.lua).
 Expect("...and finds it", marked, MULGORE .. "/bloodhoof village")
 
--- Closed beside the map, the panel opens on the area clicked.
+-- With the panel not beside the map there is nothing to tell a story on: the click is the map's.
 settings.mapPanelCollapsed = true
-Click()
-Expect("a click on an area with a story opens the panel when it is closed", settings.mapPanelCollapsed, false)
--- Turned off in the settings, it stays off.
-settings.showMapPanel, settings.mapPanelCollapsed = false, true
-Click()
-Expect("...but not when the panel is turned off in the settings", settings.mapPanelCollapsed, true)
+Expect("with the panel folded away, a click on an area with a story opens nothing", Click(), nil)
+Expect("...and leaves the panel folded", settings.mapPanelCollapsed, true)
+settings.showMapPanel, settings.mapPanelCollapsed = false, false
+Expect("...nor with it turned off in the settings", Click(), nil)
 settings.showMapPanel = true
--- An area with no story opens nothing, and leaves the panel as it is.
 local areaAt = Z.AreaAt
 Z.AreaAt = function(_, mapID) if mapID == MULGORE then return "Bloodhoof Village" end end
-settings.mapPanelCollapsed = true
-Click()
-Expect("...nor for an area with no story", settings.mapPanelCollapsed, true)
+Expect("an area with no story opens nothing", Click(), nil)
 Z.AreaAt = areaAt
 -- A city inside the zone: no area of the zone's by its name, so the click opens the city's own map.
 local THUNDER_BLUFF = 1456
@@ -84,10 +80,11 @@ Z.AreaAt = function(_, mapID)
 end
 Expect("a click on a city inside the zone selects no area of the zone's", Click(), nil)
 Expect("...and opens the city's own map, whose story the panel tells", shownMap, THUNDER_BLUFF)
--- Closed beside the map, the panel opens on the city too.
+shownMap = nil
 settings.mapPanelCollapsed = true
 Click()
-Expect("...and opens the panel when it is closed, as an area does", settings.mapPanelCollapsed, false)
+Expect("...but not with the panel folded away", shownMap, nil)
+settings.mapPanelCollapsed = false
 
 -- A drag that kept the same map point under the cursor, as OpenMap pans: the screen says it moved.
 Z.AreaAt = function(_, mapID)
