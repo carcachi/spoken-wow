@@ -197,8 +197,10 @@ function SpokenPlaces:OnOpenMapView(fn)
 	pcall(om.RegisterCallback, owner, "OpenMap_StitchedChanged", function() fn() end)
 end
 
--- How much closer than a zone's fit the view may be before a click no longer fits that zone: a
--- player zoomed in on part of a zone wants to stay there, not be taken out to the whole of it.
+-- How much closer than the fit of the zone at the view's centre the view may be before a click
+-- no longer fits the zone clicked: a player zoomed in on part of a zone wants to stay there, not
+-- be taken out to the whole of it. The zone looked at, not the one clicked: from a small zone,
+-- fitted, a large neighbour fits much further out.
 local FIT_DEEPEST = 1.5
 
 -- A map's rectangle on the stitched world.
@@ -250,7 +252,16 @@ function SpokenPlaces:FitZone(zone)
 	local fit = Fit(u0, v0, u1, v1)
 	-- OpenMap zooms in on the first map under the click it would fit closer than the view is
 	-- (OpenMap's Map/WorldMap.lua, OnCanvasClick): the zone, or a city inside it.
-	if fit > zoom * 1.05 or zoom > fit * FIT_DEEPEST then
+	if fit > zoom * 1.05 then
+		return
+	end
+	local looked = ZoneAt(om, cu, cv)
+	local lu0, lv0, lu1, lv1
+	if looked then
+		lu0, lv0, lu1, lv1 = WorldRect(om, looked)
+	end
+	local lookedFit = lu0 and lu1 > lu0 and lv1 > lv0 and Fit(lu0, lv0, lu1, lv1) or fit
+	if zoom > lookedFit * FIT_DEEPEST then
 		return
 	end
 	local okCursor, u, v = pcall(om.CursorPosition)

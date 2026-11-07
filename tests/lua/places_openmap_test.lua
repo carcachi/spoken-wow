@@ -158,6 +158,17 @@ Expect("...as is a city OpenMap's click zooms in on", Fit(DUN_MOROGH), nil)
 viewScale = 0.98
 under = { 0.72, 0.50 }
 Expect("a zone the view already shows whole stays as it is", Fit(DUN_MOROGH), nil)
+-- Loch Modan fitted, at the zoom of a zone half Dun Morogh's size: Dun Morogh, clicked at the
+-- edge, fits much further out, and still glides into view.
+view = { u = 0.81, v = 0.465, zoom = 18 }
+viewScale = 1
+WorldMapFrame.mapID = LOCH_MODAN
+under = { 0.775, 0.48 }
+g = Fit(DUN_MOROGH)
+Expect("from a small zone, fitted, a large neighbour clicked at the edge glides into view",
+    g and Near(g[1], 0.74) and Near(g[2], 0.515), true)
+WorldMapFrame.mapID = DUN_MOROGH
+view = { u = 0.74, v = 0.515, zoom = 9 }
 viewScale = 2.2
 under = { 0.75, 0.40 }
 Expect("zoomed well inside a zone, the view stays where the player put it", Fit(WETLANDS), nil)
